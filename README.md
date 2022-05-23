@@ -129,6 +129,10 @@ http://freeradius-bng-api:8083/api/v1/radius/users/4816c6b1-8176-4481-9863-0077c
 }
 ```
 
+## API Documentation
+
+You can visit the `/docs` endpoint to view an automatically generated swagger documentation for the common endpoints such as creating/reading/deleting users and groups, and adding check/reply attributes. However I will slowly be working on other documentation to go alongside with the in-build swagger UI documentation.
+
 ## TO DO
 
 - Add functionality to store Attribute/Value pairs in the freeradius database to perform validation to ensure only support AVPairs are stored in the database radcheck, radreply, radgroupcheck and radgroupreply tables.
