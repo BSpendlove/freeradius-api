@@ -32,7 +32,7 @@ def user(db: Session, user: RadiusUserCreate) -> RadiusUser:
         user_radcheck = RadiusCheck(
             username=user.username,
             attribute="Cleartext-Password",
-            op="=",
+            op=":=",
             value=user.password,
         )
         db.add_all(radusergroup, user_radcheck)
@@ -102,7 +102,7 @@ def group(db: Session, group: RadiusGroupCreate) -> RadiusGroup:
     radgroupcheck = RadiusGroupCheck(
         groupname=group.groupname,
         attribute="Cleartext-Password",
-        op="=",
+        op=":=",
         value=group.password,
     )
 
