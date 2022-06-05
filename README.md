@@ -119,6 +119,13 @@ http://freeradius-bng-api:8083/api/v1/radius/users/4816c6b1-8176-4481-9863-0077c
 }
 ```
 
+## Adding your own custom routes/models/schemas
+
+Currently there isn't a strict way of adding your own API routes, models and schemas however following best practices to ensure you are not overwriting existing files that make up the core project such as:
+
+1) Custom Endpoints must be located in their own separate folder within the `api_v1\extended` folder
+2) Custom Schemas and Models should be created in their own separate files within the related `extended` folder and then imported at the bottom of the `__init__.py` files. Examples are included for COA endpoint/schemas and Cisco BNG deployment
+
 ## API Documentation
 
 You can visit the `/docs` endpoint to view an automatically generated swagger documentation for the common endpoints such as creating/reading/deleting users and groups, and adding check/reply attributes. However I will slowly be working on other documentation to go alongside with the in-build swagger UI documentation.

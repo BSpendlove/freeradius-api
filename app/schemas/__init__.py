@@ -1,3 +1,4 @@
+# Core Schema Imports
 from .nas import NAS, NASCreate, NASInDB, NASUpdate
 from .radacct import RadAcct, RadAcctCreate, RadAcctInDB, RadAcctUpdate
 from .radgroupcheck import (
@@ -29,3 +30,6 @@ from .radusergroup import (
 from .generic import GenericDeleteResponse
 from .user import RadiusUser
 from .group import RadiusGroup
+
+# Custom Schema Imports
+from .extended.coa import COABase, COAAVPair, COAResponse

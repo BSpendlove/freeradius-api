@@ -1,3 +1,4 @@
+# Core Model Imports
 from .nas import NAS
 from .radacct import RadAcct
 from .radcheck import RadCheck
@@ -6,3 +7,5 @@ from .radgroupreply import RadGroupReply
 from .radpostauth import RadPostAuth
 from .radreply import RadReply
 from .radusergroup import RadUserGroup
+
+# Custom Model Imports

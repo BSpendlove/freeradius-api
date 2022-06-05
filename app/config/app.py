@@ -14,8 +14,9 @@ class Settings(BaseSettings):
         "https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers"
     )
 
-    VALIDATE_AVPAIRS: bool = False
-    FREERADIUS_DICTIONARY_PATHS: list = ["/freeradius_dictionaries"]
+    VALIDATE_AVPAIRS: bool = True
+    AVPAIRS_DICT: dict = {}
+    FREERADIUS_DICTIONARY_PATH: str = "/freeradius_dictionaries/dictionary"
 
     class Config:
         # env_file = ".env"
