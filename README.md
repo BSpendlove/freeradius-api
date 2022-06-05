@@ -18,7 +18,7 @@ Instead of giving applications direct access to your RADIUS backend database, yo
 
 ## Environment Variables
 
-Within the `api\config` folder there is an `app.py` file that contains the mapping of environment variables and 2 variables that can't be set in your docker image/docker-compose.yml, these are:
+Within the [app/config](./app/config/) folder there is an `app.py` file that contains the mapping of environment variables and 2 variables that can't be set in your docker image/docker-compose.yml, these are:
 
 ```
 validate_avpairs: bool = False
@@ -31,10 +31,10 @@ Any other variable can be set in the docker-compose.yml, or your .env file can b
 API_TOKEN_KEY=x-api-token
 API_TOKEN=my-super-secure-token
 SQLALCHEMY_DATABASE_URL="mysql+pymysql://username:password@localhost:3006/radius?charset=utf8mb4"
-MONGODB_URI=mongodb://freeradius:changemeP!z@mongo:27017/
+MONGODB_DATABASE_URI=mongodb://freeradius:changemeP!z@mongo:27017/
 ```
 
-## Basic attribute check/reply valdiation
+## Basic attribute check/reply valdiation - Not implemented currently with the new API routes
 
 If you choose to run `validate_avpairs` as `True`, then ensure you pass the local FreeRADIUS dictionary path which is by default: `/usr/share/freeradius/` like this:
 
@@ -72,6 +72,19 @@ Personally, I think the users/groups/attributes stored in the radius database ta
 
 1) Don't have to do it :-)
 2) have correlated data from the API endpoint about a specific user, what groups they are in, and which attributes (both radcheck/radreply) relate to them.
+3) Full support for all default freeradius database tables (as long as you haven't renamed them!)
+
+Database Tables and API Endpoint mappings, POST, GET, UPDATE and DELETE are typically supported on all API routes for CRUD operation (Create, Read, Update and Delete)
+```
+nas             -   /api/v1/radius/nas/
+radacct         -   /api/v1/radius/radacct/
+radpostauth     -   /api/v1/radius/radpostauth/
+radcheck        -   /api/v1/radius/radcheck/
+radreply        -   /api/v1/radius/radreply/
+radgroupcheck   -   /api/v1/radius/radgroupcheck/
+radgroupreply   -   /api/v1/radius/radgroupreply/
+radusergroup    -   /api/v1/radius/radusergroup/
+```
 
 Below is an example of a specific user where FreeRADIUS will return IP information, VRF and Loopback interface to assign a static IP for a customer that pays for a 150Mbps service:
 
@@ -80,50 +93,27 @@ http://freeradius-bng-api:8083/api/v1/radius/users/4816c6b1-8176-4481-9863-0077c
 
 {
     "username": "4816c6b1-8176-4481-9863-0077cf35f05d",
-    "radcheck": [
+    "groups": [
         {
+            "id": 36,
+            "groupname": "SPEED_1000",
+            "priority": 100
+        }
+    ],
+    "check_attributes": [
+        {
+            "id": 21,
             "attribute": "Cleartext-Password",
+            "op": ":=",
+            "value": "default"
+        }
+    ],
+    "reply_attributes": [
+        {
+            "id": 46,
+            "attribute": "Cisco-AVPair",
             "op": "+=",
-            "value": "generic",
-            "id": 15
-        }
-    ],
-    "radreply": [
-        {
-            "attribute": "Framed-IP-Address",
-            "op": "=",
-            "value": "100.64.0.69",
-            "id": 7
-        },
-        {
-            "attribute": "Framed-IP-Netmask",
-            "op": "=",
-            "value": "255.255.255.0",
-            "id": 8
-        },
-        {
-            "attribute": "Cisco-AVPair",
-            "op": "=",
-            "value": "dhcpv4-option=3,4,1,100.64.0.1",
-            "id": 11
-        },
-        {
-            "attribute": "Cisco-AVPair",
-            "op": "=",
-            "value": "ipv4-unnumbered=Loopback123",
-            "id": 16
-        },
-        {
-            "attribute": "Cisco-AVPair",
-            "op": "=",
-            "value": "vrf-id=VRF-SERVICE-A",
-            "id": 23
-        }
-    ],
-    "radusergroup": [
-        {
-            "groupname": "SPEED_150",
-            "priority": "1"
+            "value": "delegated-prefix=2001:db8:1800::/48"
         }
     ]
 }
