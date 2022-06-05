@@ -40,7 +40,7 @@ class COA:
         *,
         address,
         secret,
-        port: int = 1234,
+        port: int = 3799,
         dictionary: Union[str, dict] = settings.AVPAIRS_DICT,
         timeout: int = 5
     ) -> None:
