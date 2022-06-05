@@ -31,6 +31,19 @@ def read_radacct_username(
     return radacct
 
 
+@router.get("/{username}", response_model=schemas.RadAcct)
+def read_radacct_username_latest(
+    *, db: Session = Depends(get_db), username: str
+) -> Any:
+    """Retrieve the latest radacct record for a specific username"""
+    radacct = crud.radacct.get_last_session_by_username(db=db, username=username)
+    if not radacct:
+        raise HTTPException(
+            status_code=404, detail="No accounting records found for this Username"
+        )
+    return radacct
+
+
 @router.delete("/", response_model=schemas.GenericDeleteResponse)
 def delete_radacct_all(*, db: Session = Depends(get_db)) -> Any:
     """Deletes all radacct records"""
