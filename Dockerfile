@@ -1,14 +1,11 @@
-FROM python:3.9
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
-WORKDIR /app
+WORKDIR /code
 
-COPY ./requirements.txt /app/requirements.txt
+COPY ./requirements.txt /code/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY ./api /app/api
+COPY ./app /code/app
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80"]
-
-# If running behind a proxy like Nginx or Traefik add --proxy-headers
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--proxy-headers"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
