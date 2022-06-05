@@ -17,6 +17,14 @@ class CRUDRadAcct(CRUDBase[RadAcct, RadAcctCreate, RadAcctUpdate]):
             db=db, criterion=(RadAcct.username == username), skip=skip, limit=limit
         )
 
+    def get_last_session_by_username(
+        self, db: Session, *, username: str
+    ) -> Optional[RadAcct]:
+        return db.query(RadAcct).filter(RadAcct.username == username).first()
+
+    def get_by_session_id(self, db: Session, *, session_id: str) -> Optional[RadAcct]:
+        return db.query(RadAcct).filter(RadAcct.acctsessionid == session_id).first()
+
     def remove_accounting_records(
         self, db: Session, *, username: str = ""
     ) -> GenericDeleteResponse:
