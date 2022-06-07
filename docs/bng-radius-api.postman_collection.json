@@ -1,0 +1,1325 @@
+{
+	"info": {
+		"_postman_id": "14c24b7d-fca4-4ee1-89fa-44f2ce465933",
+		"name": "bng-radius-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17417305"
+	},
+	"item": [
+		{
+			"name": "NAS",
+			"item": [
+				{
+					"name": "Create NAS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nasname\": \"127.0.0.1\",\r\n    \"community\": \"testtest\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/nas/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"nas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read NAS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/nas/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"nas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read NAS ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/nas/2",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"nas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update NAS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/nas/2",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"nas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete NAS",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/nas/1",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"nas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadAcct",
+			"item": [
+				{
+					"name": "Read RadAcct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radacct/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radacct",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadAcct ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radacct/684a.76c2.9841",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radacct",
+								"684a.76c2.9841"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadAcct Username",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radacct/1",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radacct",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadAcct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radacct/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radacct",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadGroupCheck",
+			"item": [
+				{
+					"name": "Create RadGroupCheck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupname\": \"someGroupName\",\r\n    \"attribute\": \"Cleartext-Password\",\r\n    \"op\": \":=\",\r\n    \"value\": \"default\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupcheck/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupcheck",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadGroupCheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupcheck/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupcheck",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadGroupCheck ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupcheck/7",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupcheck",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update RadGroupCheck",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupname\": \"someGroupName\",\r\n    \"attribute\": \"Cleartext-Password\",\r\n    \"op\": \":=\",\r\n    \"value\": \"default\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupcheck/11",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupcheck",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadGroupCheck",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupcheck/7",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupcheck",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadGroupReply",
+			"item": [
+				{
+					"name": "Create RadGroupReply",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupname\": \"someGroupName\",\r\n    \"attribute\": \"Fall-Through\",\r\n    \"op\": \"=\",\r\n    \"value\": \"yes\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupreply/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupreply",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadGroupReply",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupreply/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupreply",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadGroupReply ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupreply/22",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupreply",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update RadGroupReply",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"yes\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupreply/18",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupreply",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadGroupReply",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radgroupreply/18",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radgroupreply",
+								"18"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadPostAuth",
+			"item": [
+				{
+					"name": "Read RadPostAuth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radpostauth/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radpostauth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadPostAuth ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radpostauth/684a.76c2.9841",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radpostauth",
+								"684a.76c2.9841"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadPostAuth Username",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radpostauth/9e19063b-f2b9-462f-9586-c92e0e15d394",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radpostauth",
+								"9e19063b-f2b9-462f-9586-c92e0e15d394"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadPostAuth",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radpostauth/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radpostauth",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadCheck",
+			"item": [
+				{
+					"name": "Create RadCheck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"4816c6b1-8176-4481-9863-0077cf35f05d\",\r\n    \"attribute\": \"Cleartext-Password\",\r\n    \"op\": \":=\",\r\n    \"value\": \"default\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radcheck/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radcheck",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadCheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radcheck/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radcheck",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadCheck ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radcheck/23",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radcheck",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update RadCheck",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"default\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radcheck/23",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radcheck",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadCheck",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radcheck/24",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radcheck",
+								"24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadReply",
+			"item": [
+				{
+					"name": "Create RadReply",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"4816c6b1-8176-4481-9863-0077cf35f05d\",\r\n    \"attribute\": \"Cisco-AVPair\",\r\n    \"op\": \"+=\",\r\n    \"value\": \"delegated-prefix=2a0e:1d40:1800::/48\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radreply/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radreply",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadReply",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radreply/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radreply",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadReply ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radreply/45",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radreply",
+								"45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update RadReply",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"4816c6b1-8176-4481-9863-0077cf35f05d\",\r\n    \"attribute\": \"Cisco-AVPair\",\r\n    \"op\": \"+=\",\r\n    \"value\": \"delegated-prefix=2a0e:1d40:1800::/48\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radreply/45",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radreply",
+								"45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadReply",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radreply/23",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radreply",
+								"23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadUserGroup",
+			"item": [
+				{
+					"name": "Create RadUserGroup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"09f0e50b-709e-497d-9ffd-f7eb07823a40\",\r\n    \"groupname\": \"someGroupName\",\r\n    \"priority\": 100\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radusergroup/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radusergroup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadUserGroup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radusergroup/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radusergroup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadUserGroup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radusergroup/37",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radusergroup",
+								"37"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update RadUserGroup",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupname\": \"someGroupName\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radusergroup/31",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radusergroup",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadUserGroup",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/radusergroup/7",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"radusergroup",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadiusUser",
+			"item": [
+				{
+					"name": "Create RadiusUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testapiCreate\",\r\n    \"check_attributes\": [\r\n        {\r\n            \"attribute\": \"Cleartext-Password\",\r\n            \"op\": \":=\",\r\n            \"value\": \"TestFromAPI\"\r\n        }\r\n    ],\r\n    \"reply_attributes\": [\r\n        {\r\n            \"attribute\": \"Cisco-AVPair\",\r\n            \"op\": \"+=\",\r\n            \"value\": \"test=true\"\r\n        },\r\n        {\r\n            \"attribute\": \"Cisco-AVPair\",\r\n            \"op\": \"+=\",\r\n            \"value\": \"something=1.2.3.4\"\r\n        },\r\n        {\r\n            \"attribute\": \"Cisco-AVPair\",\r\n            \"op\": \"+=\",\r\n            \"value\": \"addr=3.3.3.3\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/users/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadiusUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/users/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadiusUser Username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/users/testapiCreate",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"users",
+								"testapiCreate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadiusUser Username",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/users/testapiCreate?include_acct=true&include_postauth=true",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"users",
+								"testapiCreate"
+							],
+							"query": [
+								{
+									"key": "include_acct",
+									"value": "true"
+								},
+								{
+									"key": "include_postauth",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RadiusGroup",
+			"item": [
+				{
+					"name": "Create RadiusGroup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupname\": \"someGroupName\",\r\n    \"check_attributes\": [\r\n        {\r\n            \"attribute\": \"Cleartext-Password\",\r\n            \"op\": \":=\",\r\n            \"value\": \"TestFromAPI\"\r\n        }\r\n    ],\r\n    \"reply_attributes\": [\r\n        {\r\n            \"attribute\": \"Cisco-AVPair\",\r\n            \"op\": \"+=\",\r\n            \"value\": \"test=true\"\r\n        },\r\n        {\r\n            \"attribute\": \"Cisco-AVPair\",\r\n            \"op\": \"+=\",\r\n            \"value\": \"speed_in_example=PM_1000\"\r\n        },\r\n        {\r\n            \"attribute\": \"Cisco-AVPair\",\r\n            \"op\": \"+=\",\r\n            \"value\": \"speed_out_example=PM_1000\"\r\n        }\r\n    ],\r\n    \"users\": [\r\n        {\r\n            \"username\": \"api1\",\r\n            \"priority\": 11\r\n        },\r\n        {\r\n            \"username\": \"api2\",\r\n            \"priority\": 22\r\n        },\r\n        {\r\n            \"username\": \"api3\",\r\n            \"priority\": 33\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/groups/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"groups",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadiusGroup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/groups/",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"groups",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read RadiusGroup Groupname",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/groups/EXCHANGE_13243546",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"groups",
+								"EXCHANGE_13243546"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RadiusGroup Groupname",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/groups/EXCHANGE_13243546",
+							"protocol": "{{SCHEMA}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"radius",
+								"groups",
+								"EXCHANGE_13243546"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Extended",
+			"item": [
+				{
+					"name": "COA",
+					"item": [
+						{
+							"name": "Send COA Attributes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"secret\": \"bimbom\",\r\n    \"attributes\": [{\r\n        \"attribute\": \"Cisco-AVPair\",\r\n        \"value\": \"bimbom\"\r\n    }]\r\n}"
+								},
+								"url": {
+									"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/coa/127.0.0.1",
+									"protocol": "{{SCHEMA}}",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"v1",
+										"radius",
+										"coa",
+										"127.0.0.1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Send COA Attributes based on Session ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"secret\": \"bimbom\",\r\n    \"attributes\": [{\r\n        \"attribute\": \"Cisco-AVPair\",\r\n        \"value\": \"bimbom\"\r\n    }]\r\n}"
+								},
+								"url": {
+									"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/coa/session/13522473",
+									"protocol": "{{SCHEMA}}",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"v1",
+										"radius",
+										"coa",
+										"session",
+										"13522473"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Send COA Attributes based on latest session for Username",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"secret\": \"bimbom\",\r\n    \"attributes\": [{\r\n        \"attribute\": \"Cisco-AVPair\",\r\n        \"value\": \"bimbom\"\r\n    }]\r\n}"
+								},
+								"url": {
+									"raw": "{{SCHEMA}}://{{HOST}}:{{PORT}}/api/v1/radius/coa/session/username/someusername",
+									"protocol": "{{SCHEMA}}",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"v1",
+										"radius",
+										"coa",
+										"session",
+										"username",
+										"someusername"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{API_TOKEN}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({key: 'Content-Type', value: 'application/json' });"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

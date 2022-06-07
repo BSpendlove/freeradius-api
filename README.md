@@ -204,6 +204,6 @@ You can visit the `/docs` endpoint to view an automatically generated swagger do
 
 ## TO DO
 
-- Either fix pyrad or implement a radius COA client myself in Python because its terribly maintained
+- Either fix pyrad or implement a radius COA client myself in Python because its terribly maintained (some FreeRADIUS dictionary files are not parsed properly)
 
 - Potentially restructure the project since its getting a bit messy already...
