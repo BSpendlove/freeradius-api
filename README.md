@@ -202,6 +202,8 @@ You can take a look at the [COA](./app/api/api_v1/extended/coa.py) example which
 
 You can visit the `/docs` endpoint to view an automatically generated swagger documentation for the common endpoints such as creating/reading/deleting users and groups, and adding check/reply attributes. However I will slowly be working on other documentation to go alongside with the in-build swagger UI documentation.
 
+You can view a POSTMAN collection [here](./docs/bng-radius-api.postman_collection.json)
+
 ## TO DO
 
 - Either fix pyrad or implement a radius COA client myself in Python because its terribly maintained (some FreeRADIUS dictionary files are not parsed properly)
