@@ -1,13 +1,9 @@
-from typing import Any, Dict, Optional, Union, List
+from typing import Optional, List
 
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
-
-from app.models.radgroupcheck import RadGroupCheck
-from app.models.radgroupreply import RadGroupReply
-from app.models.radusergroup import RadUserGroup
+from app.models import RadGroupCheck, RadGroupReply, RadUserGroup, RadAcct, RadPostAuth
 
 from app.schemas.generic import AVPair
 from app.schemas.group import (
@@ -63,6 +59,42 @@ class CRUDRadiusGroup(CRUDBase[RadiusGroup, RadiusGroupCreate, RadiusGroupUpdate
             )
             data.append(user)
         return data
+
+    def get_by_groupname(self, db: Session, *, groupname: str) -> RadiusGroup:
+        check_attributes = self.get_check_attributes(db=db, groupname=groupname)
+        reply_attributes = self.get_reply_attributes(db=db, groupname=groupname)
+        users = self.get_users(db=db, groupname=groupname)
+
+        if not check_attributes and not reply_attributes and not users:
+            return None
+
+        group = RadiusGroup(
+            groupname=groupname,
+            users=users,
+            check_attributes=check_attributes,
+            reply_attributes=reply_attributes,
+        )
+        return group
+
+    def remove_from_all_tables(self, db: Session, *, groupname: str) -> int:
+        rows_deleted = 0
+
+        rows_deleted += (
+            db.query(RadGroupCheck)
+            .filter(RadGroupCheck.groupname == groupname)
+            .delete()
+        )
+        rows_deleted += (
+            db.query(RadGroupReply)
+            .filter(RadGroupReply.groupname == groupname)
+            .delete()
+        )
+        rows_deleted += (
+            db.query(RadUserGroup).filter(RadUserGroup.groupname == groupname).delete()
+        )
+
+        db.commit()
+        return rows_deleted
 
 
 radiusgroup = CRUDRadiusGroup(RadiusGroup)

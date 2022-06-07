@@ -9,24 +9,17 @@ class Settings(BaseSettings):
     API_TOKEN_KEY: str = "x-api-token"
     API_TOKEN: str
     SQLALCHEMY_DATABASE_URI: str
-    MONGODB_DATABASE_URI: str = "mongodb://freeradius:changemeP!z@mongo:27017/"
-    IANA_ENTERPRISE_NUMBERS: str = (
-        "https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers"
-    )
 
     VALIDATE_AVPAIRS: bool = True
-    AVPAIRS_DICT: dict = {}
     FREERADIUS_DICTIONARY_PATH: str = "/freeradius_dictionaries/dictionary"
+    AVPAIRS_DICT: dict = {}
 
     class Config:
-        # env_file = ".env"
         fields = {
             "API_TOKEN_KEY": {"env": "API_TOKEN_KEY"},
             "API_TOKEN": {"env": "API_TOKEN"},
             "SQLALCHEMY_DATABASE_URI": {"env": "SQLALCHEMY_DATABASE_URI"},
-            "MONGODB_DATABASE_URI": {"env": "MONGODB_DATABASE_URI"},
             "VALIDATE_AVPAIRS": {"env": "VALIDATE_AVPAIRS"},
-            "IANA_ENTERPRISE_NUMBERS": {"env": "IANA_ENTERPRISE_NUMBERS"},
         }
 
 

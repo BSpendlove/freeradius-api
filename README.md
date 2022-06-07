@@ -2,6 +2,59 @@
 
 This project/API isn't affiliated with FreeRADIUS but can sit on a FreeRADIUS server (or a separate server out of line with FreeRADIUS) to manage your FreeRADIUS database backend and add users/groups/attributes by exposing a few useful HTTP endpoints.
 
+---
+
+Would you rather be running INSERT statements against your FreeRADIUS database like this:
+
+```
+INSERT INTO radcheck (username, attribute, op, value) VALUES ('myUserName', 'Cleartext-Password', ':=', 'TestFromSQL')
+INSERT INTO radreply (username, attribute, op, value) VALUES ('myUserName', 'Cisco-AVPair', '+=', 'test=true')
+INSERT INTO radreply (username, attribute, op, value) VALUES ('myUserName', 'Cisco-AVPair', '+=', 'something=1.2.3.4')
+INSERT INTO radusergroup (username, groupname, priority) VALUES ('myUserName', 'someGroupName', '123')
+```
+
+Or like this:
+```
+curl --location --request POST 'http://localhost:8083/api/v1/radius/users/' \
+--header 'x-api-token: my-super-secure-api-token' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+    "username": "myUserName",
+    "check_attributes": [
+        {
+            "attribute": "Cleartext-Password",
+            "op": ":=",
+            "value": "TestFromAPI"
+        }
+    ],
+    "reply_attributes": [
+        {
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "test=true"
+        },
+        {
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "something=1.2.3.4"
+        },
+        {
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "addr=3.3.3.3"
+        }
+    ],
+    "groups": [
+        {
+            "groupname": "someGroupName",
+            "priority": 123
+        }
+    ]
+}'
+```
+
+If you prefer the first option then close down this page and continue with your life because this project isn't for you... :-)
+
 ## Introduction
 
 This python FastAPI app is created to work with a BNG type deployment (mainly tested in an internet service provider environment), however that doesn't mean it is limited to only that type of scenario, this API is actually built to interact with a database (supported by SQLAlchemy as long as freeradius has a driver for it) and can be used as a generic HTTP API for adding attribute pairs and users/groups into the database. Depending on your type of network, you may want to deploy this as a central API that interacts with your database backend to manage RADIUS attributes that are used during the AAA process of your BNG. Another way to deploy it if you are working on a smaller scale and have limited resources, running FreeRadius and the relevant database (which needs to implemented as a database driver) on the same VM however this isn't typically recommended in a production network.
@@ -72,19 +125,36 @@ Personally, I think the users/groups/attributes stored in the radius database ta
 
 1) Don't have to do it :-)
 2) have correlated data from the API endpoint about a specific user, what groups they are in, and which attributes (both radcheck/radreply) relate to them.
-3) Full support for all default freeradius database tables (as long as you haven't renamed them!)
+3) Full support for all default freeradius database tables (as long as you haven't renamed them! however this is easy to change if required)
+4) COA support - Either build your request manually via the route `/api/v1/radius/coa/{ip_address}` or use the routes to send COA attributes via either an Acct-Session-Id or Username like so `/api/v1/radius/coa/session/username/someusername` or `/api/v1/radius/coa/session/13522473`. These routes will make use of the existing radacct table to pull the latest session information to send to the relevant NAS IP address
+5) Create RADIUS users and groups in a more efficient manner using the `/api/v1/radius/groups/` and `/api/v1/radius/users/` endpoints to add your check/reply attributes and user->group mappings in a single POST request (or delete if you want to delete all related attributes and user/group mappings)
 
 Database Tables and API Endpoint mappings, POST, GET, UPDATE and DELETE are typically supported on all API routes for CRUD operation (Create, Read, Update and Delete)
 ```
-nas             -   /api/v1/radius/nas/
-radacct         -   /api/v1/radius/radacct/
-radpostauth     -   /api/v1/radius/radpostauth/
-radcheck        -   /api/v1/radius/radcheck/
-radreply        -   /api/v1/radius/radreply/
-radgroupcheck   -   /api/v1/radius/radgroupcheck/
-radgroupreply   -   /api/v1/radius/radgroupreply/
-radusergroup    -   /api/v1/radius/radusergroup/
+nas             -   /api/v1/radius/nas/ [GET, POST, DELETE, PUT]
+radacct         -   /api/v1/radius/radacct/ [GET, DELETE]
+radpostauth     -   /api/v1/radius/radpostauth/ [GET, DELETE]
+radcheck        -   /api/v1/radius/radcheck/ [GET, POST, DELETE, PUT]
+radreply        -   /api/v1/radius/radreply/ [GET, POST, DELETE, PUT]
+radgroupcheck   -   /api/v1/radius/radgroupcheck/ [GET, POST, DELETE, PUT]
+radgroupreply   -   /api/v1/radius/radgroupreply/ [GET, POST, DELETE, PUT]
+radusergroup    -   /api/v1/radius/radusergroup/ [GET, POST, DELETE, PUT]
 ```
+
+Useful API endpoints that make life easier:
+```
+Create a user with attribute/group mappings         -   /api/v1/radius/users/ [POST]
+Delete a user and the attribute/group mappings      -   /api/v1/radius/users/ [DELETE]
+Get a user with attribute/group mappings            -   /api/v1/radius/users/{username} [GET]
+
+Create a group with attribute/user mappings         -   /api/v1/radius/groups/ [POST]
+Delete a group and the attribute/user mappings      -   /api/v1/radius/groups/ [DELETE]
+Get a group with attribute/user mappings            -   /api/v1/radius/groups/{groupname} [GET]
+```
+
+For more details, visit the `API Documentation` section.
+
+---
 
 Below is an example of a specific user where FreeRADIUS will return IP information, VRF and Loopback interface to assign a static IP for a customer that pays for a 150Mbps service:
 
@@ -96,7 +166,7 @@ http://freeradius-bng-api:8083/api/v1/radius/users/4816c6b1-8176-4481-9863-0077c
     "groups": [
         {
             "id": 36,
-            "groupname": "SPEED_1000",
+            "groupname": "SPEED_150",
             "priority": 100
         }
     ],
@@ -126,14 +196,14 @@ Currently there isn't a strict way of adding your own API routes, models and sch
 1) Custom Endpoints must be located in their own separate folder within the `api_v1\extended` folder
 2) Custom Schemas and Models should be created in their own separate files within the related `extended` folder and then imported at the bottom of the `__init__.py` files. Examples are included for COA endpoint/schemas and Cisco BNG deployment
 
+You can take a look at the [COA](./app/api/api_v1/extended/coa.py) example which is an extension to the API that doesn't belong to "directly interacting with FreeRADIUS database".
+
 ## API Documentation
 
 You can visit the `/docs` endpoint to view an automatically generated swagger documentation for the common endpoints such as creating/reading/deleting users and groups, and adding check/reply attributes. However I will slowly be working on other documentation to go alongside with the in-build swagger UI documentation.
 
 ## TO DO
 
-- Add functionality to store Attribute/Value pairs in the freeradius database to perform validation to ensure only support AVPairs are stored in the database radcheck, radreply, radgroupcheck and radgroupreply tables.
-
-- Add Docker support
+- Either fix pyrad or implement a radius COA client myself in Python because its terribly maintained
 
 - Potentially restructure the project since its getting a bit messy already...

@@ -28,8 +28,8 @@ from .radusergroup import (
     RadUserGroupUpdate,
 )
 from .generic import GenericDeleteResponse
-from .user import RadiusUser
-from .group import RadiusGroup
+from .user import RadiusUser, RadiusUserCreate, RadiusUserUpdate
+from .group import RadiusGroup, RadiusGroupCreate, RadiusGroupUpdate
 
 # Custom Schema Imports
 from .extended.coa import COABase, COAAVPair, COAResponse

@@ -9,16 +9,6 @@ class RadiusGroupBase(BaseModel):
     groupname: Optional[str]
 
 
-# Properties to receive via API on creation
-class RadiusGroupCreate(RadiusGroupBase):
-    groupname: str
-
-
-# Properties to receive via API on update
-class RadiusGroupUpdate(RadiusGroupBase):
-    pass
-
-
 class RadiusGroupUserAssosication(BaseModel):
     id: Optional[int] = None
     username: str
@@ -26,6 +16,16 @@ class RadiusGroupUserAssosication(BaseModel):
 
 
 class RadiusGroup(RadiusGroupBase):
-    users: Optional[List[RadiusGroupUserAssosication]]
-    check_attributes: Optional[List[AVPair]]
-    reply_attributes: Optional[List[AVPair]]
+    users: Optional[List[RadiusGroupUserAssosication]] = []
+    check_attributes: Optional[List[AVPair]] = []
+    reply_attributes: Optional[List[AVPair]] = []
+
+
+# Properties to receive via API on creation
+class RadiusGroupCreate(RadiusGroup):
+    groupname: str
+
+
+# Properties to receive via API on update
+class RadiusGroupUpdate(RadiusGroup):
+    pass

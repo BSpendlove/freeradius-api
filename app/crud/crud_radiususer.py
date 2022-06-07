@@ -1,13 +1,9 @@
-from typing import Any, Dict, Optional, Union, List
+from typing import Optional, List
 
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
-
-from app.models.radcheck import RadCheck
-from app.models.radreply import RadReply
-from app.models.radusergroup import RadUserGroup
+from app.models import RadCheck, RadReply, RadUserGroup, RadAcct, RadPostAuth
 
 from app.schemas.generic import AVPair
 from app.schemas.user import (
@@ -16,9 +12,6 @@ from app.schemas.user import (
     RadiusUserUpdate,
     RadiusUserGroupAssosication,
 )
-
-# from app.models.radusergroup import RadUserGroup
-# from app.schemas.radusergroup import RadUserGroupCreate, RadUserGroupUpdate
 
 
 class CRUDRadiusUser(CRUDBase[RadiusUser, RadiusUserCreate, RadiusUserUpdate]):
@@ -60,6 +53,54 @@ class CRUDRadiusUser(CRUDBase[RadiusUser, RadiusUserCreate, RadiusUserUpdate]):
             )
             data.append(group)
         return data
+
+    def get_by_username(self, db: Session, *, username: str) -> Optional[RadiusUser]:
+        check_attributes = self.get_check_attributes(db=db, username=username)
+        reply_attributes = self.get_reply_attributes(db=db, username=username)
+        user_groups = self.get_user_groups(db=db, username=username)
+
+        if not check_attributes and not reply_attributes and not user_groups:
+            return None
+
+        user = RadiusUser(
+            username=username,
+            groups=user_groups,
+            check_attributes=check_attributes,
+            reply_attributes=reply_attributes,
+        )
+        return user
+
+    def remove_from_all_tables(
+        self,
+        db: Session,
+        *,
+        username: str,
+        include_acct: bool = False,
+        include_postauth: bool = False
+    ) -> int:
+        rows_deleted = 0
+
+        rows_deleted += (
+            db.query(RadCheck).filter(RadCheck.username == username).delete()
+        )
+        rows_deleted += (
+            db.query(RadReply).filter(RadReply.username == username).delete()
+        )
+        rows_deleted += (
+            db.query(RadUserGroup).filter(RadUserGroup.username == username).delete()
+        )
+
+        if include_acct:
+            rows_deleted += (
+                db.query(RadAcct).filter(RadAcct.username == username).delete()
+            )
+
+        if include_postauth:
+            rows_deleted += (
+                db.query(RadPostAuth).filter(RadPostAuth.username == username).delete()
+            )
+        db.commit()
+        return rows_deleted
 
 
 radiususer = CRUDRadiusUser(RadiusUser)

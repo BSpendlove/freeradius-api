@@ -9,13 +9,3 @@ services:
       - "8083:80"
     env_file:
       - .env
-  #  links:
-  #    - mongo:mongo
-  #mongo:
-  #  image: mongo:4.4.6
-  #  restart: always
-  #  environment:
-  #    MONGO_INITDB_ROOT_USERNAME: freeradius
-  #    MONGO_INITDB_ROOT_PASSWORD: changemeP!z
-  #  ports:
-  #    - 27017:27017
