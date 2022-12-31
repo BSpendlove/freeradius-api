@@ -1,35 +1,35 @@
 # Core Schema Imports
-from .nas import NAS, NASCreate, NASInDB, NASUpdate
-from .radacct import RadAcct, RadAcctCreate, RadAcctInDB, RadAcctUpdate
-from .radgroupcheck import (
+from app.schemas.nas import NAS, NASCreate, NASInDB, NASUpdate
+from app.schemas.radacct import RadAcct, RadAcctCreate, RadAcctInDB, RadAcctUpdate
+from app.schemas.radgroupcheck import (
     RadGroupCheck,
     RadGroupCheckCreate,
     RadGroupCheckInDB,
     RadGroupCheckUpdate,
 )
-from .radgroupreply import (
+from app.schemas.radgroupreply import (
     RadGroupReply,
     RadGroupReplyCreate,
     RadGroupReplyInDB,
     RadGroupReplyUpdate,
 )
-from .radpostauth import (
+from app.schemas.radpostauth import (
     RadPostAuth,
     RadPostAuthCreate,
     RadPostAuthInDB,
     RadPostAuthUpdate,
 )
-from .radcheck import RadCheck, RadCheckCreate, RadCheckInDB, RadCheckUpdate
-from .radreply import RadReply, RadReplyCreate, RadReplyInDB, RadReplyUpdate
-from .radusergroup import (
+from app.schemas.radcheck import RadCheck, RadCheckCreate, RadCheckInDB, RadCheckUpdate
+from app.schemas.radreply import RadReply, RadReplyCreate, RadReplyInDB, RadReplyUpdate
+from app.schemas.radusergroup import (
     RadUserGroup,
     RadUserGroupCreate,
     RadUserGroupInDB,
     RadUserGroupUpdate,
 )
-from .generic import GenericDeleteResponse
-from .user import RadiusUser, RadiusUserCreate, RadiusUserUpdate
-from .group import RadiusGroup, RadiusGroupCreate, RadiusGroupUpdate
+from app.schemas.generic import GenericDeleteResponse
+from app.schemas.user import RadiusUser, RadiusUserCreate, RadiusUserUpdate
+from app.schemas.group import RadiusGroup, RadiusGroupCreate, RadiusGroupUpdate
 
 # Custom Schema Imports
-from .extended.coa import COABase, COAAVPair, COAResponse
+from app.schemas.extended.coa import COABase, COAAVPair, COAResponse
