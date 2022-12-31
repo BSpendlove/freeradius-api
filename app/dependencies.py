@@ -1,11 +1,12 @@
 from fastapi import Security, HTTPException
 from fastapi.security.api_key import APIKeyHeader
+from typing import AsyncGenerator
 
 from starlette.status import HTTP_403_FORBIDDEN
 from loguru import logger
 
 from app.config.app import settings
-from app.database import SessionLocal
+from app.database import async_local_session
 
 api_key_header = APIKeyHeader(name=settings.API_TOKEN_KEY, auto_error=False)
 
@@ -20,10 +21,6 @@ def require_api_key_auth(api_key: str = Security(api_key_header)):
     return True
 
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def async_get_db() -> AsyncGenerator:
+    async with async_local_session() as session:
+        yield session

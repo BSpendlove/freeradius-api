@@ -11,7 +11,7 @@ class Settings(BaseSettings):
         "change-me-please",  # Key for User #1
         "some-other-key",  # API Key for User #2
     ]
-    SQLALCHEMY_DATABASE_URI: str = "mysql+pymysql://radius_write:radius_write@localhost:4006/radius?charset=utf8mb4"
+    SQLALCHEMY_DATABASE_URI: str = "mysql+asyncmy://radius_write:radius_write@localhost:4006/radius?charset=utf8mb4"
 
     VALIDATE_AVPAIRS: bool = False
     FREERADIUS_DICTIONARY_PATH: str = "/freeradius_dictionaries/dictionary"

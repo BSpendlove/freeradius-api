@@ -1,11 +1,11 @@
 from sqlalchemy import Table, CHAR, Column, DateTime, String, TIMESTAMP, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER
 
-from app.database import Base, engine
+from app.database import Base
 
 
 class RadAcct(Base):
-    __tablename__ = Table("radacct", Base.metadata, autoload=True, autoload_with=engine)
+    __tablename__ = Table("radacct", Base.metadata)
 
     radacctid = Column(BIGINT(21), primary_key=True)
     acctsessionid = Column(

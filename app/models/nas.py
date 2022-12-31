@@ -1,11 +1,11 @@
 from sqlalchemy import Table, CHAR, Column, DateTime, String, TIMESTAMP, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER
 
-from app.database import Base, engine
+from app.database import Base
 
 
 class NAS(Base):
-    __tablename__ = Table("nas", Base.metadata, autoload=True, autoload_with=engine)
+    __tablename__ = Table("nas", Base.metadata)
 
     id = Column(INTEGER(10), primary_key=True)
     nasname = Column(String(128), nullable=False, index=True)

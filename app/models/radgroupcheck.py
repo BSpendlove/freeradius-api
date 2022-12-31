@@ -1,13 +1,11 @@
 from sqlalchemy import Table, CHAR, Column, DateTime, String, TIMESTAMP, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER
 
-from app.database import Base, engine
+from app.database import Base
 
 
 class RadGroupCheck(Base):
-    __tablename__ = Table(
-        "radgroupcheck", Base.metadata, autoload=True, autoload_with=engine
-    )
+    __tablename__ = Table("radgroupcheck", Base.metadata)
 
     id = Column(INTEGER(11), primary_key=True)
     groupname = Column(
