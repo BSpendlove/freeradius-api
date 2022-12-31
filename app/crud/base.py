@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.database import Base
+from app.config.app import settings
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -26,11 +27,28 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
+        if settings.PREFER_DATABASE_DESCENDING:
+            return (
+                db.query(self.model)
+                .order_by(self.model.id.desc())
+                .offset(skip)
+                .limit(limit)
+                .all()
+            )
         return db.query(self.model).offset(skip).limit(limit).all()
 
     def get_multi_filter(
         self, db: Session, *, criterion: Tuple, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
+        if settings.PREFER_DATABASE_DESCENDING:
+            return (
+                db.query(self.model)
+                .filter(criterion)
+                .order_by(self.model.id.desc())
+                .offset(skip)
+                .limit(limit)
+                .all()
+            )
         return db.query(self.model).filter(criterion).offset(skip).limit(limit).all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
