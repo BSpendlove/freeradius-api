@@ -10,7 +10,7 @@ from app.database import SessionLocal
 api_key_header = APIKeyHeader(name=settings.API_TOKEN_KEY, auto_error=False)
 
 
-async def require_api_key_auth(api_key: str = Security(api_key_header)):
+def require_api_key_auth(api_key: str = Security(api_key_header)):
     if api_key not in settings.API_TOKENS:
         raise HTTPException(
             status_code=HTTP_403_FORBIDDEN, detail="Could not validate credentials"
