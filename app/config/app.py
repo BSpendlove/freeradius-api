@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     VALIDATE_AVPAIRS: bool = False
     FREERADIUS_DICTIONARY_PATH: str = "/freeradius_dictionaries/dictionary"
     AVPAIRS_DICT: dict = {}
+    PREFER_DATABASE_DESCENDING: bool = True  # Returns latest database entries first for get_multi and get_multi_filter functions in base CRUD operations
 
 
 settings = Settings()
