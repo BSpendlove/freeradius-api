@@ -4,10 +4,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
-from app.dependencies import get_api_key, get_db
+from app.dependencies import require_api_key_auth, get_db
 from app import crud, models, schemas
 
-router = APIRouter(dependencies=[Depends(get_api_key)])
+router = APIRouter(dependencies=[Depends(require_api_key_auth)])
 
 
 @router.post("/", response_model=schemas.RadiusUser)
