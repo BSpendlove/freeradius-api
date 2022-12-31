@@ -10,3 +10,4 @@ requests>=2.27.1
 SQLAlchemy>=1.4.36
 ttp>=0.8.4
 uvicorn>=0.17.6
+asyncmy==0.2.5
