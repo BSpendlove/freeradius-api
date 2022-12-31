@@ -34,5 +34,19 @@ class CRUDRadReply(CRUDBase[RadReply, RadReplyCreate, RadReplyUpdate]):
             return False
         return True
 
+    async def get_avpair_value_like(
+        self, db: AsyncSession, username: str, attribute: str, expr: str
+    ):
+        results = await self.get_filter_like(
+            db=db,
+            criterion=(
+                self.model.username == username,
+                self.model.attribute == attribute,
+            ),
+            column=self.model.value,
+            expr=expr,
+        )
+        return results
+
 
 radreply = CRUDRadReply(RadReply)

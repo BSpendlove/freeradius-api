@@ -1,0 +1,33 @@
+{
+    "service_name": "BNG_BROADBAND_20MBPS",
+    "username_type": "mac_address",
+    "radusergroups": [
+        {
+            "username": "{{username}}",
+            "groupname": "{{service_name}}",
+            "priority": 100
+        }
+    ],
+    "radgroupcheck_avpairs": [
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "ClearText-Password",
+            "op": ":=",
+            "value": "default"
+        }
+    ],
+    "radgroupreply_avpairs": [
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "sub-qos-policy-in=PM_SPEED_20"
+        },
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "sub-qos-policy-out=PM_SPEED_20"
+        }
+    ]
+}

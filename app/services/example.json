@@ -22,6 +22,12 @@
             "attribute": "Framed-Pool",
             "op": "=",
             "value": "VLAN_100_POOL"
+        },
+        {
+            "username": "{{username}}",
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "something=hello(ytes)"
         }
     ],
     "radgroupcheck_avpairs": [

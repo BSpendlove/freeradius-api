@@ -28,6 +28,16 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         results = await db.execute(select(self.model).filter(*criterion))
         return results.scalars().first()
 
+    async def get_filter_like(
+        self, db: AsyncSession, criterion: Tuple, column, expr: str
+    ) -> ModelType:
+        query = select(self.model).filter(*criterion).where(column.ilike(expr))
+        print(query)
+        results = await db.execute(
+            select(self.model).filter(*criterion).where(column.ilike(f"%{expr}%"))
+        )
+        return results.scalars().first()
+
     async def get_multi(
         self, db: AsyncSession, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:

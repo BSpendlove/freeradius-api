@@ -5,7 +5,21 @@ from loguru import logger
 from app.config.app import settings
 from app.schemas.extended.service import Service
 from app.database import async_local_session
+from app.schemas.generic import AVPair
 import app.crud.async_driver as crud
+
+
+def process_cisco_avpair(av_pair: AVPair) -> AVPair:
+    if av_pair.attribute.lower() != "cisco-avpair":
+        logger.error("Unable to process AVPair")
+        return
+
+    av_pair_split = av_pair.value.split("=")
+    if not len(av_pair_split) == 2:
+        logger.error("Cisco-AVPair is not correctly formatted, should be len of 2")
+        return
+
+    return AVPair(attribute=av_pair_split[0], op="=", value=av_pair_split[1])
 
 
 def services_init():
@@ -71,7 +85,7 @@ async def service_user_checks(
         db:             DB session passed from the FastAPI dependency
     """
     logger.info(
-        f"Performing prechecks on user {username} for service '{service.service_name}'"
+        f"Performing prechecks on user '{username}' for service '{service.service_name}'"
     )
     if not service.radcheck_avpairs or not service.radreply_avpairs:
         return True
@@ -81,9 +95,19 @@ async def service_user_checks(
         if avpair.username == "{{username}}":
             avpair.username == username
 
-        existing_avpairs = await crud.radcheck.already_exist_attribute(
-            db=db, username=avpair.username, attribute=avpair.attribute
-        )
+        if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
+            cisco_avpair = process_cisco_avpair(av_pair=avpair)
+            existing_avpairs = await crud.radcheck.get_avpair_value_like(
+                db=db,
+                username=avpair.username,
+                attribute=avpair.attribute,
+                expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
+            )
+        else:
+            existing_avpairs = await crud.radcheck.already_exist_attribute(
+                db=db, username=avpair.username, attribute=avpair.attribute
+            )
+
         if existing_avpairs:
             logger.warning(
                 f"Detected existing RadCheck AVPair {avpair.attribute} for username {username}"
@@ -95,9 +119,19 @@ async def service_user_checks(
         if avpair.username == "{{username}}":
             avpair.username == username
 
-        existing_avpairs = await crud.radreply.already_exist_attribute(
-            db=db, username=avpair.username, attribute=avpair.attribute
-        )
+        if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
+            cisco_avpair = process_cisco_avpair(av_pair=avpair)
+            existing_avpairs = await crud.radreply.get_avpair_value_like(
+                db=db,
+                username=avpair.username,
+                attribute=avpair.attribute,
+                expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
+            )
+        else:
+            existing_avpairs = await crud.radreply.already_exist_attribute(
+                db=db, username=avpair.username, attribute=avpair.attribute
+            )
+
         if existing_avpairs:
             logger.warning(
                 f"Detected existing RadReply AVPair {avpair.attribute} for username {username}"
@@ -152,7 +186,7 @@ async def service_pre_checks(
         if service.radgroupreply_avpairs:
             for avpair in service.radgroupreply_avpairs:
                 if avpair.groupname == "{{service_name}}":
-                    avpair.groupname == service.service_name
+                    avpair.groupname = service.service_name
 
                 radgroupreply_av_exist = await crud.radgroupreply.already_exist_strict(
                     db=db,
@@ -164,9 +198,10 @@ async def service_pre_checks(
 
                 if not radgroupreply_av_exist:
                     logger.warning(
-                        f"Service {service.serivce_name}: RadGroupReply AVPair: '{avpair.attribute} {avpair.op} {avpair.value}' does not exist in the database"
+                        f"Service {service.service_name}: RadGroupReply AVPair: '{avpair.attribute} {avpair.op} {avpair.value}' does not exist in the database"
                     )
                     return False
 
+    logger.success(f"Service {service.service_name} pre-checks passed!")
     service.prechecks_passed = True
     return True
