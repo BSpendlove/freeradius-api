@@ -69,22 +69,13 @@ Instead of giving applications direct access to your RADIUS backend database, yo
 
 ![Deployment #4](docs/imgs/deployment_4.png)
 
-## Environment Variables
+## Configuration
 
-Within the [app/config](./app/config/) folder there is an `app.py` file that contains the mapping of environment variables and 2 variables that can't be set in your docker image/docker-compose.yml, these are:
+Currently, all configuration is done via the /app/config/app.py file. Once you've cloned this repository, you should change these values including the API keys and Database URI connection parameters. All the configuration should work with the test infrastructure provided in /tests/infrastructure which is a minimal build for a typical FreeRADIUS deployment using MariaDB with MaxScale Proxy/Load balancer, and a single instace of FreeRADIUS with the relevant SQL configuration to connect to the database backend.
 
 ```
 validate_avpairs: bool = False
 freeradius_dictionary_paths: list = ["/freeradius_dictionaries"]
-```
-
-Any other variable can be set in the docker-compose.yml, or your .env file can be passed which might contain variables like this:
-
-```
-API_TOKEN_KEY=x-api-token
-API_TOKEN=my-super-secure-token
-SQLALCHEMY_DATABASE_URL="mysql+pymysql://username:password@localhost:3006/radius?charset=utf8mb4"
-MONGODB_DATABASE_URI=mongodb://freeradius:changemeP!z@mongo:27017/
 ```
 
 ## Basic attribute check/reply valdiation - Not implemented currently with the new API routes
@@ -109,7 +100,7 @@ If you want to prevent this validation and allow any attribute to be created in 
 
 ## Running the application
 
-I am certain this section will be updated in the future however for now, you can just clone this project, copy the `.env-example` and rename it to `.env`, fill out the environment variables as required and then finally run `docker-compose up --build`.
+I am certain this section will be updated in the future however for now, you can just clone this project, fill out the configuration variables as required located in `/app/config/app.py` and then finally run `docker-compose up --build`.
 
 You should technically be able to run this API across multiple FreeRADIUS servers natively without any additional changes however the minimal logging in the API will not be centralized, this is down to the user to properly implement centralized logging. While it is technically possible to perform attribute validation when the API isn't running directly on the FreeRADIUS servers, I have found this API works best when you are running it directly on the FreeRADIUS server and then work on the basis of if your radius server is down
 

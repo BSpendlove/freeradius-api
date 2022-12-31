@@ -7,20 +7,15 @@ class Settings(BaseSettings):
     APP_NAME: str = "freeradius-bng-api"
     APP_VERSION: str = "0.1.0"
     API_TOKEN_KEY: str = "x-api-token"
-    API_TOKEN: str
-    SQLALCHEMY_DATABASE_URI: str
+    API_TOKENS: list = [
+        "change-me-please",  # Key for User #1
+        "some-other-key",  # API Key for User #2
+    ]
+    SQLALCHEMY_DATABASE_URI: str = "mysql+pymysql://radius_write:radius_write@localhost:4006/radius?charset=utf8mb4"
 
-    VALIDATE_AVPAIRS: bool = True
+    VALIDATE_AVPAIRS: bool = False
     FREERADIUS_DICTIONARY_PATH: str = "/freeradius_dictionaries/dictionary"
     AVPAIRS_DICT: dict = {}
-
-    class Config:
-        fields = {
-            "API_TOKEN_KEY": {"env": "API_TOKEN_KEY"},
-            "API_TOKEN": {"env": "API_TOKEN"},
-            "SQLALCHEMY_DATABASE_URI": {"env": "SQLALCHEMY_DATABASE_URI"},
-            "VALIDATE_AVPAIRS": {"env": "VALIDATE_AVPAIRS"},
-        }
 
 
 settings = Settings()

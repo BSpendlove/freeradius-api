@@ -4,12 +4,12 @@ from ipaddress import IPv4Address
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.dependencies import get_api_key, get_db
+from app.dependencies import require_api_key_auth, get_db
 from app.config.app import settings
 from app import crud, models, schemas
 from app.modules.coa import COA
 
-router = APIRouter(dependencies=[Depends(get_api_key)])
+router = APIRouter(dependencies=[Depends(require_api_key_auth)])
 
 
 @router.post("/{ip_address}", response_model=schemas.COAResponse)

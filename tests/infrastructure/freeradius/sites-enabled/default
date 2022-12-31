@@ -1,0 +1,129 @@
+server default {
+    # Auth
+    listen {
+        type = auth
+        ipaddr = *
+        port = 0
+
+        limit {
+            max_connections = 16
+            lifetime = 0
+            idle_timeout = 30
+        }
+    }
+
+    # Accounting
+    listen {
+        ipaddr = *
+        port = 0
+        type = acct
+
+        limit {
+        }
+    }
+
+    # IPv6 Auth
+    listen {
+        type = auth
+        ipv6addr = ::   # any.  ::1 == localhost
+        port = 0
+
+        limit {
+            max_connections = 16
+            lifetime = 0
+            idle_timeout = 30
+        }
+    }
+
+    # IPv6 Accounting
+    listen {
+        ipv6addr = ::
+        port = 0
+        type = acct
+
+        limit {}
+    }
+
+    # Authorization
+    authorize {
+        filter_username
+        preprocess
+        suffix
+        files
+        redundant_sql_readable
+        pap
+    }
+
+
+    # Authentication
+    authenticate {
+        Auth-Type PAP {
+            pap
+        }
+    }
+
+
+    # Pre Accounting
+    preacct {
+        preprocess
+        acct_unique
+        files
+    }
+
+    # Accounting
+    accounting {
+        detail
+        redundant {
+            sql_01
+            detail
+        }
+        attr_filter.accounting_response
+    }
+
+
+    #  The rlm_sql module is *much* faster
+    session {}
+
+    #  Post-Authentication
+    post-auth {
+        redundant_sql_writeable {
+                fail = 1
+        }
+        if (fail) {
+                ok
+        }
+        Post-Auth-Type REJECT {
+                # log failed authentications in SQL, too.
+                redundant_sql_writeable {
+                        fail = 1
+                }
+                if (fail) {
+                        ok
+                }
+                attr_filter.access_reject
+        }
+        #  Filter access challenges.
+        Post-Auth-Type Challenge {
+        }
+    }
+
+    pre-proxy {}
+
+    post-proxy {}
+}
+
+server robust_accounting {
+    listen {
+        type = detail
+        filename = "${radacctdir}/detail-acct-*"
+        load_factor = 25
+        track = yes
+    }
+
+    accounting {
+        redundant {
+                sql_01
+                detail
+        }
+    }
+}

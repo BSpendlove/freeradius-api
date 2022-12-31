@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: changemeroot
+      MARIADB_DATABASE: radius
+    volumes:
+      - ${PWD}/mariadb:/var/lib/mysql:rw
+      - ${PWD}/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:rw
+
+  radius_maxscale:
+    image: mariadb/maxscale:latest
+    restart: always
+    volumes:
+      - ${PWD}/maxscale/maxscale.cnf:/etc/maxscale.cnf.d/my-maxscale.cnf:Z
+    ports:
+      - 8989:8989
+      - 4006:4006
+    depends_on:
+      - mariadb
+
+  radius:
+    image: freeradius/freeradius-server:latest
+    restart: always
+    volumes:
+      - ${PWD}/freeradius/clients.conf:/etc/freeradius/clients.conf:rw
+      - ${PWD}/freeradius/template.d:/etc/freeradius/template.d:rw
+      - ${PWD}/freeradius/radiusd.conf:/etc/freeradius/radiusd.conf:rw
+      - ${PWD}/freeradius/mods-enabled/sql:/etc/freeradius/mods-enabled/sql:rw
+      - ${PWD}/freeradius/sites-enabled/default:/etc/freeradius/sites-enabled/default:rw
+      - ${PWD}/logs/freeradius:/var/log/freeradius:Z
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+    depends_on:
+      - mariadb
+      - radius_maxscale
+    command: -X
