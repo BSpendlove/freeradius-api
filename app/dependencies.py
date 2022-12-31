@@ -1,6 +1,7 @@
 from fastapi import Security, HTTPException
 from fastapi.security.api_key import APIKeyHeader
 from typing import AsyncGenerator
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from starlette.status import HTTP_403_FORBIDDEN
 from loguru import logger

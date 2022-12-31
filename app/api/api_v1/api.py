@@ -16,6 +16,7 @@ from app.api.api_v1.endpoints import groups
 
 # Extended API Routes (vendor specific modules, etc...)
 from app.api.api_v1.extended import coa
+from app.api.api_v1.extended import services
 
 api_router = APIRouter()
 
@@ -43,3 +44,4 @@ api_router.include_router(groups.router, prefix="/radius/groups", tags=["groups"
 
 # Extended API Routes
 api_router.include_router(coa.router, prefix="/radius/coa", tags=["coa"])
+api_router.include_router(services.router, prefix="/services", tags=["services"])

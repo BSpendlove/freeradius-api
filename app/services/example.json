@@ -1,0 +1,61 @@
+{
+    "service_name": "VLAN_100_SERVICE",
+    "username_type": "mac_address",
+    "radusergroups": [
+        {
+            "username": "{{username}}",
+            "groupname": "{{service_name}}",
+            "priority": 100
+        }
+    ],
+    "radcheck_avpairs": [
+        {
+            "username": "{{username}}",
+            "attribute": "ClearText-Password",
+            "op": ":=",
+            "value": "{{username}}"
+        }
+    ],
+    "radreply_avpairs": [
+        {
+            "username": "{{username}}",
+            "attribute": "Framed-Pool",
+            "op": "=",
+            "value": "VLAN_100_POOL"
+        }
+    ],
+    "radgroupcheck_avpairs": [
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "ClearText-Password",
+            "op": "=",
+            "value": "default"
+        }
+    ],
+    "radgroupreply_avpairs": [
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "Tunnel-Type",
+            "op": ":=",
+            "value": 13
+        },
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "Tunnel-Medium-Type",
+            "op": ":=",
+            "value": 6
+        },
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "Tunnel-Private-Group-Id",
+            "op": ":=",
+            "value": 100
+        },
+        {
+            "groupname": "{{service_name}}",
+            "attribute": "Fall-Through",
+            "op": "=",
+            "value": "Yes"
+        }
+    ]
+}

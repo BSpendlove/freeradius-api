@@ -22,5 +22,21 @@ class CRUDRadGroupReply(
             return False
         return True
 
+    async def already_exist_strict(
+        self, db: AsyncSession, groupname: str, attribute: str, op: str, value: str
+    ) -> bool:
+        results = await self.get_filter(
+            db=db,
+            criterion=(
+                self.model.groupname == groupname,
+                self.model.attribute == attribute,
+                self.model.op == op,
+                self.model.value == value,
+            ),
+        )
+        if not results:
+            return False
+        return True
+
 
 radgroupreply = CRUDRadGroupReply(RadGroupReply)
