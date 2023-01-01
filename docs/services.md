@@ -52,7 +52,7 @@ Example services can be found [in this directory](https://github.com/BSpendlove/
 
 ### Special Variables
 
-The following variables can be used so that the policy endpoint will automatically populate these fields during the user prechecks and provisioning process:
+The following variables can be used as values so that the policy endpoint will automatically populate these fields during the user prechecks and provisioning process:
 
 | Variable Name      | Description |
 | ----------- | ----------- |
