@@ -20,7 +20,7 @@ class ServiceUsernameTypeEnum(str, Enum):
 
 class Service(BaseModel):
     service_name: constr(min_length=1, max_length=60)
-    username_type: ServiceUsernameTypeEnum
+    username_type: ServiceUsernameTypeEnum = ServiceUsernameTypeEnum.str
     username_regex: Optional[str]
     radusergroups: Optional[List[RadUserGroup]]
     radcheck_avpairs: Optional[List[RadCheck]]

@@ -29,11 +29,11 @@ async def create_user_from_service(
             detail=f"Service '{create_user.service_name}' is not defined in any of the service files.",
         )
 
-    # if not user_service.prechecks_passed:
-    #    raise HTTPException(
-    #        status_code=400,
-    #        detail=f"Prechecks for this service have failed, please see startup logs for further information",
-    #    )
+    if not user_service.prechecks_passed:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Prechecks for this service have failed, please see startup logs for further information",
+        )
 
     # Perform type checks, need to find a nicer way of doing this however I never suspect someone creating too many radius users that it causes a real production problem...
     username_types = {
