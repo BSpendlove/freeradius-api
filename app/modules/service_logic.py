@@ -87,62 +87,91 @@ async def service_user_checks(
     logger.info(
         f"Performing prechecks on user '{username}' for service '{service.service_name}'"
     )
-    if not service.radcheck_avpairs or not service.radreply_avpairs:
-        return True
+    if (
+        not service.radcheck_avpairs
+        and not service.radreply_avpairs
+        and not service.radusergroups
+    ):
+        logger.warning(
+            f"Service {service.service_name} has no radusergroup assosications or user specific radcheck/radreply attributes. Skipping creation of user because this isn't a valid service"
+        )
+        return False
+
+    # RadUserGroup
+    for radusergroup in service.radusergroups:
+        if radusergroup.username == "{{username}}":
+            radusergroup.username = username
+
+        if radusergroup.groupname == "{{service_name}}":
+            radusergroup.groupname = service.service_name
+
+        logger.info(
+            f"Checking for any existing radusergroup assosications for group {radusergroup.groupname} and user {radusergroup.username}"
+        )
+        existing_group_assosication = await crud.radusergroup.already_exist(
+            db=db, groupname=radusergroup.groupname, username=radusergroup.username
+        )
+        if existing_group_assosication:
+            logger.warning(
+                f"Detected existing radusergroup assosication {radusergroup.groupname}"
+            )
+            return False
 
     # RadCheck
-    for avpair in service.radcheck_avpairs:
-        if avpair.username == "{{username}}":
-            avpair.username == username
+    if service.radcheck_avpairs:
+        for avpair in service.radcheck_avpairs:
+            if avpair.username == "{{username}}":
+                avpair.username == username
 
-        if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
-            cisco_avpair = process_cisco_avpair(av_pair=avpair)
-            existing_avpairs = await crud.radcheck.get_avpair_value_like(
-                db=db,
-                username=avpair.username,
-                attribute=avpair.attribute,
-                expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
-            )
-        else:
-            existing_avpairs = await crud.radcheck.already_exist(
-                db=db,
-                username=avpair.username,
-                attribute=avpair.attribute,
-                value=avpair.value,
-            )
+            if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
+                cisco_avpair = process_cisco_avpair(av_pair=avpair)
+                existing_avpairs = await crud.radcheck.get_avpair_value_like(
+                    db=db,
+                    username=avpair.username,
+                    attribute=avpair.attribute,
+                    expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
+                )
+            else:
+                existing_avpairs = await crud.radcheck.already_exist(
+                    db=db,
+                    username=avpair.username,
+                    attribute=avpair.attribute,
+                    value=avpair.value,
+                )
 
-        if existing_avpairs:
-            logger.warning(
-                f"Detected existing RadCheck AVPair {avpair.attribute} for username {username}"
-            )
-            return False
+            if existing_avpairs:
+                logger.warning(
+                    f"Detected existing RadCheck AVPair {avpair.attribute} for username {username}"
+                )
+                return False
 
     # RadReply
-    for avpair in service.radreply_avpairs:
-        if avpair.username == "{{username}}":
-            avpair.username == username
+    if service.radreply_avpairs:
+        for avpair in service.radreply_avpairs:
+            if avpair.username == "{{username}}":
+                avpair.username == username
 
-        if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
-            cisco_avpair = process_cisco_avpair(av_pair=avpair)
-            existing_avpairs = await crud.radreply.get_avpair_value_like(
-                db=db,
-                username=avpair.username,
-                attribute=avpair.attribute,
-                expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
-            )
-        else:
-            existing_avpairs = await crud.radreply.already_exist(
-                db=db,
-                username=avpair.username,
-                attribute=avpair.attribute,
-                value=avpair.value,
-            )
+            if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
+                cisco_avpair = process_cisco_avpair(av_pair=avpair)
+                existing_avpairs = await crud.radreply.get_avpair_value_like(
+                    db=db,
+                    username=avpair.username,
+                    attribute=avpair.attribute,
+                    expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
+                )
+            else:
+                existing_avpairs = await crud.radreply.already_exist(
+                    db=db,
+                    username=avpair.username,
+                    attribute=avpair.attribute,
+                    value=avpair.value,
+                )
 
-        if existing_avpairs:
-            logger.warning(
-                f"Detected existing RadReply AVPair {avpair.attribute} for username {username}"
-            )
-            return False
+            if existing_avpairs:
+                logger.warning(
+                    f"Detected existing RadReply AVPair {avpair.attribute} for username {username}"
+                )
+                return False
 
     return True
 

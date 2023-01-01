@@ -29,5 +29,21 @@
             "op": "+=",
             "value": "sub-qos-policy-out=PM_SPEED_20"
         }
+    ],
+    "radcheck_avpairs": [
+        {
+            "username": "{{username}}",
+            "attribute": "ClearText-Password",
+            "op": ":=",
+            "value": "default"
+        }
+    ],
+    "radreply_avpairs": [
+        {
+            "username": "{{username}}",
+            "attribute": "Cisco-AVPair",
+            "op": "+=",
+            "value": "ip-pool=SOME-POOL"
+        }
     ]
 }

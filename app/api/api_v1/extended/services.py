@@ -4,15 +4,17 @@ from uuid import UUID
 from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from loguru import logger
 from app.dependencies import require_api_key_auth, async_get_db
 from app.config.app import settings
 from app.modules.service_logic import service_user_checks
 from app import schemas
+import app.crud.async_driver as crud
 
 router = APIRouter(dependencies=[Depends(require_api_key_auth)])
 
 
-@router.post("/")
+@router.post("/", response_model=schemas.Service)
 async def create_user_from_service(
     create_user: schemas.ServiceCreateUser, db: AsyncSession = Depends(async_get_db)
 ) -> Any:
@@ -96,4 +98,26 @@ async def create_user_from_service(
             detail=f"Unable to create user {create_user.username} due to prechecks failing",
         )
 
-    return {"bimbom": True}
+    # Auto create radgroupcheck and radgroupreply attributes
+    #       Not currently implemented
+    #
+
+    # Add user to radusergroup
+    if updated_user_service.radusergroups:
+        for group in updated_user_service.radusergroups:
+            logger.debug(f"Adding radusergroup {group}")
+            await crud.radusergroup.create(db=db, obj_in=group)
+
+    # Add user specific radcheck attributes
+    if updated_user_service.radcheck_avpairs:
+        for radcheck in updated_user_service.radcheck_avpairs:
+            logger.debug(f"Adding radcheck {radcheck}")
+            await crud.radcheck.create(db=db, obj_in=radcheck)
+
+    # Add user specific radreply attributes
+    if updated_user_service.radreply_avpairs:
+        for radreply in updated_user_service.radreply_avpairs:
+            logger.debug(f"Adding radreply {radreply}")
+            await crud.radreply.create(db=db, obj_in=radreply)
+
+    return updated_user_service
