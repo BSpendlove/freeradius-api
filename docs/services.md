@@ -40,7 +40,7 @@ Example services can be found [in this directory](https://github.com/BSpendlove/
 | Variable Name      | Description |
 | ----------- | ----------- |
 | service_name | Unique Name for the service to reference during provisioning process |
-| username_type   | Used to compare username, valid types are `str | int | uuid | mac_address | regex` |
+| username_type   | Used to compare username, valid types are "str &#124; int &#124; uuid &#124; mac_address &#124; regex" |
 | username_regex | Regex String to use if username_type is set to `regex` |
 | radusergroups | List of RadUserGroup that the user is apart of |
 | radcheck_avpairs | AVPairs that will be added into the radcheck table for this user during provisioning process |
@@ -68,7 +68,7 @@ The following variables can be used so that the policy endpoint will automatical
 | ----------- | ----------- |
 | username | The name of the user to apply the AVPair to, preferably use `{{username}}` for template to fill this variable out for you automatically |
 | attribute | IETF Attribute or Vendor Specific Attribute |
-| op | Operation `= | += | :=` |
+| op | Operation "= &#124; += &#124; :=" |
 | value |  Value of the Attribute to set |
 
 `radgroupcheck_avpairs` and `radgroupreply_avpairs`
@@ -76,7 +76,7 @@ The following variables can be used so that the policy endpoint will automatical
 | ----------- | ----------- |
 | groupname | The name of the group to check AVPairs, preferably use `{{service_name}}` for template to fill this variable out for you automatically |
 | attribute | IETF Attribute or Vendor Specific Attribute |
-| op | Operation `= | += | :=` |
+| op | Operation "= &#124; += &#124; :=" |
 | value |  Value of the Attribute to set |
 
 ---
