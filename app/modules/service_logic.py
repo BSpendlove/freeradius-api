@@ -123,6 +123,7 @@ async def service_user_checks(
             if avpair.username == "{{username}}":
                 avpair.username == username
 
+            # Cisco-AVPair validiation
             if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
                 cisco_avpair = process_cisco_avpair(av_pair=avpair)
                 existing_avpairs = await crud.radcheck.get_avpair_value_like(
@@ -151,6 +152,7 @@ async def service_user_checks(
             if avpair.username == "{{username}}":
                 avpair.username == username
 
+            # Cisco-AVPair validiation
             if settings.VALIDATE_AVPAIRS and avpair.attribute.lower() == "cisco-avpair":
                 cisco_avpair = process_cisco_avpair(av_pair=avpair)
                 existing_avpairs = await crud.radreply.get_avpair_value_like(

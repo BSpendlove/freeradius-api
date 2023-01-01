@@ -25,8 +25,12 @@ END-VENDOR		{{ vendor_name }}
 
 
 def check_pyrad_dict(directory: str):
+    logger.info("Validiating RADIUS dictionaries")
     validate = dictionary.Dictionary(dict=directory)
-    return validate
+    attributes = validate.attributes
+    logger.success("Successfully validated RADIUS dictionaries")
+    logger.debug(f"Total RADIUS AVPairs loaded = {len(attributes)}")
+    return attributes
 
 
 def vsa_loader(directory: str = "/freeradius_dictionaries"):
