@@ -104,8 +104,11 @@ async def service_user_checks(
                 expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
             )
         else:
-            existing_avpairs = await crud.radcheck.already_exist_attribute(
-                db=db, username=avpair.username, attribute=avpair.attribute
+            existing_avpairs = await crud.radcheck.already_exist(
+                db=db,
+                username=avpair.username,
+                attribute=avpair.attribute,
+                value=avpair.value,
             )
 
         if existing_avpairs:
@@ -128,8 +131,11 @@ async def service_user_checks(
                 expr=f"{cisco_avpair.attribute}{cisco_avpair.op}",
             )
         else:
-            existing_avpairs = await crud.radreply.already_exist_attribute(
-                db=db, username=avpair.username, attribute=avpair.attribute
+            existing_avpairs = await crud.radreply.already_exist(
+                db=db,
+                username=avpair.username,
+                attribute=avpair.attribute,
+                value=avpair.value,
             )
 
         if existing_avpairs:
