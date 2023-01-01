@@ -1,0 +1,36 @@
+{
+    "service_name": "VLAN_100",
+    "username_type": "regex",
+    "username_regex": "^(\\S+)@mycompany.com$",
+    "username_attributes": {
+        "radusergroup": [
+            {
+                "username": "{{username}}",
+                "groupname": "{{service_name}}",
+                "priority": "100"
+            }
+        ]
+    },
+    "group_attributes": {
+        "radgroupreply": [
+            {
+                "groupname": "{{service_name}}",
+                "attribute": "Tunnel-Type",
+                "op": ":=",
+                "value": 13
+            },
+            {
+                "groupname": "{{service_name}}",
+                "attribute": "Tunnel-Medium-Type",
+                "op": ":=",
+                "value": 6
+            },
+            {
+                "groupname": "{{service_name}}",
+                "attribute": "Tunnel-Private-Group-Id",
+                "op": ":=",
+                "value": 100
+            }
+        ]
+    }
+}

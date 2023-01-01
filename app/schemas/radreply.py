@@ -6,23 +6,20 @@ from app.schemas.enums import OpEnum
 
 # Shared properties
 class RadReplyBase(BaseModel):
-    username: Optional[str]
-    attribute: Optional[str]
-    op: Optional[str]
-    value: Optional[str]
+    username: str
+    attribute: str
+    op: str
+    value: str
 
 
 # Properties to receive via API on creation
 class RadReplyCreate(RadReplyBase):
-    username: str
-    attribute: str
-    op: OpEnum
-    value: str
+    pass
 
 
 # Properties to receive via API on update
 class RadReplyUpdate(BaseModel):
-    value: str
+    pass
 
 
 class RadReplyInDBBase(RadReplyBase):

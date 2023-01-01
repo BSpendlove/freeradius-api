@@ -6,18 +6,15 @@ from app.schemas.enums import OpEnum
 
 # Shared properties
 class RadCheckBase(BaseModel):
-    username: Optional[str]
-    attribute: Optional[str]
-    op: Optional[str]
-    value: Optional[str]
+    username: str
+    attribute: str
+    op: str
+    value: str
 
 
 # Properties to receive via API on creation
 class RadCheckCreate(RadCheckBase):
-    username: str
-    attribute: str
-    op: OpEnum
-    value: str
+    pass
 
 
 # Properties to receive via API on update

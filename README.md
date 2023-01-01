@@ -71,36 +71,24 @@ Instead of giving applications direct access to your RADIUS backend database, yo
 
 ## Configuration
 
-Currently, all configuration is done via the /app/config/app.py file. Once you've cloned this repository, you should change these values including the API keys and Database URI connection parameters. All the configuration should work with the test infrastructure provided in /tests/infrastructure which is a minimal build for a typical FreeRADIUS deployment using MariaDB with MaxScale Proxy/Load balancer, and a single instace of FreeRADIUS with the relevant SQL configuration to connect to the database backend.
+Currently, all configuration is done via the /app/config/app.py file, however you can supply a `.env` file to override the Python file if you don't want to store configuration in this file, the only value that isn't formatted correctly is the multiple API keys so you should update this in the Python file but avoid pushing the changes back into GitHub if you have forked the repo. Once you've cloned this repository, you should change these values including the API keys and Database URI connection parameters. All the configuration should work with the test infrastructure provided in /tests/infrastructure which is a minimal build for a typical FreeRADIUS deployment using MariaDB with MaxScale Proxy/Load balancer, and a single instace of FreeRADIUS with the relevant SQL configuration to connect to the database backend.
+
+The below configuration requires you to ensure FreeRADIUS dictionaries are present in this directory, this concept is explained in the more detailed [Services Guide](https://github.com/BSpendlove/freeradius-api/tree/main/docs/services.md). Essentially this feature is very beneficial if you are running the API on the same host as FreeRADIUS itself, to ensure attributes that FreeRADIUS can't build due it not being present in the existing dictionary files are not created during the provisioning process.
 
 ```
 validate_avpairs: bool = False
 freeradius_dictionary_paths: list = ["/freeradius_dictionaries"]
 ```
 
-## Basic attribute check/reply valdiation - Not implemented currently with the new API routes
+## Service Creation
 
-If you choose to run `validate_avpairs` as `True`, then ensure you pass the local FreeRADIUS dictionary path which is by default: `/usr/share/freeradius/` like this:
+As of 2023, a basic service endpoint has been introduced so you can simply create a service in a JSON file and ensure when a user is added using the service endpoint, that it adhers to a specific username format (eg. mac address, uuid or regex match) and that it automatically gets put into a group (or groups) and have the API check if the group AV pairs actually exist in the database (eg. radgroupcheck and radgroupreply database tables)
 
-```
-version: '3.1'
-
-services:
-  freeradius_bng_api:
-    build: .
-    volumes:
-      - /usr/share/freeradius/:/freeradius_dictionaries:ro
-```
-
-Then if you set your `freeradius_dictionary_paths` variable to `["/freeradius_dictionaries"]` then the app will attempt to look at any files within this directory and parse them using the ttp python module. Any vendors and attributes will be added to the local MongoDB container, this can be a remote MongoDB replica set and shared between multiple docker instances this API runs on and assumes you have the same `vendor.dictionary` files loaded on each FreeRADIUS server.
-
-I will in the future, provide some kind of validation check to further look into sub-attribute valdiation, for example with Cisco-AVPair and validating the "sub" AV pair `default-ipv4-gateway=100.70.254.1`, however for now I have only focused on the main vendor specific attributes that can be loaded.
-
-If you want to prevent this validation and allow any attribute to be created in the radcheck, radreply, radgroupcheck and radgroupreply database tables, then ensure `validate_avpairs` is set to `False` in the `/api/config/app.py` file.
+This essentially allows you to write services as JSON (instead of writing python) and then simply ensuring radius attributes are assigned to that specific service. Examples of services can be [found here](https://github.com/BSpendlove/freeradius-api/tree/main/app/services/). Detailed documentation specifically on this subject [can be found here](https://github.com/BSpendlove/freeradius-api/tree/main/docs/services.md)
 
 ## Running the application
 
-I am certain this section will be updated in the future however for now, you can just clone this project, fill out the configuration variables as required located in `/app/config/app.py` and then finally run `docker-compose up --build`.
+I am certain this section will be updated in the future however for now, you can just clone this project, fill out the configuration variables as required located in `/app/config/app.py`, create an `.env` file if required and then finally run `docker-compose up`.
 
 You should technically be able to run this API across multiple FreeRADIUS servers natively without any additional changes however the minimal logging in the API will not be centralized, this is down to the user to properly implement centralized logging. While it is technically possible to perform attribute validation when the API isn't running directly on the FreeRADIUS servers, I have found this API works best when you are running it directly on the FreeRADIUS server and then work on the basis of if your radius server is down
 

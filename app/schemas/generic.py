@@ -14,3 +14,6 @@ class AVPair(BaseModel):
     attribute: str
     op: OpEnum
     value: str
+
+    class Config:
+        use_enum_values = True

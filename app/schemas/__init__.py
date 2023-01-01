@@ -33,3 +33,4 @@ from app.schemas.group import RadiusGroup, RadiusGroupCreate, RadiusGroupUpdate
 
 # Custom Schema Imports
 from app.schemas.extended.coa import COABase, COAAVPair, COAResponse
+from app.schemas.extended.service import Service, ServiceCreateUser

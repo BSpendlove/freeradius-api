@@ -1,5 +1,6 @@
 from pydantic import BaseSettings
-from functools import lru_cache
+from app.schemas.extended.service import Service
+from typing import List
 
 
 class Settings(BaseSettings):
@@ -17,6 +18,12 @@ class Settings(BaseSettings):
     FREERADIUS_DICTIONARY_PATH: str = "/freeradius_dictionaries/dictionary"
     AVPAIRS_DICT: dict = {}
     PREFER_DATABASE_DESCENDING: bool = True  # Returns latest database entries first for get_multi and get_multi_filter functions in base CRUD operations
+
+    SERVICES_DIRECTORY: str = "/services"
+    SERVICES: List[Service] = []
+
+    class Config:
+        env_file = ".env"
 
 
 settings = Settings()

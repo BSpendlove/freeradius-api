@@ -4,7 +4,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.dependencies import require_api_key_auth, async_get_db
 from app.config.app import settings
-from app.dependencies import require_api_key_auth, async_get_db
 from app import schemas
 from app.modules.coa import COA
 import app.crud.async_driver as crud
